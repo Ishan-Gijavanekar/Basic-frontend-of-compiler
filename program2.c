@@ -1,3 +1,5 @@
+#include<stdio.h>
+
 int main() {
     int num = 1234;
     int x = sumOfDigits(num);

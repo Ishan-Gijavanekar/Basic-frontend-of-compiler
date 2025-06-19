@@ -1,3 +1,5 @@
+#include<stdio.h>
+
 int main() {
     print("Enter the number: ");
     print("Sum = %d", sum(5));
