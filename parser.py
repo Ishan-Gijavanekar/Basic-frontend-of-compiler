@@ -96,16 +96,18 @@ class Parser:
                 cond_temp = self.generate_expression_code(cond_expr)
                 else_label = self.new_label()
                 end_label = self.new_label()
-                self.block_stack.append('if')
+                self.block_stack.append('block')
                 self.intermediate_code.append(f"if not {cond_temp} goto {else_label}")
                 self.pending_else = (else_label, end_label)  # Save for the else
+                self.loop_stack.append((else_label, end_label))  # Save for matching else
+
 
             elif keyword == 'else':
                 if self.pending_else:
                     else_label, end_label = self.pending_else
                     self.intermediate_code.append(f"goto {end_label}")
                     self.intermediate_code.append(f"{else_label}:")
-                    self.block_stack.append('else')
+                    self.block_stack.append('block')
                     self.loop_stack.append(('else', end_label))  # Mark the end label for this else
                     self.pending_else = None
                 else:
@@ -126,6 +128,8 @@ class Parser:
                 return
 
             if last_block == 'block':
+                if self.pending_else:
+                    return
                 if not self.loop_stack:
                     return
                 top = self.loop_stack[-1]
@@ -151,14 +155,14 @@ class Parser:
 
                 return
 
-            if last_block == 'if':
-                # We close if block without else
-                if self.pending_else:
-                    else_label, end_label = self.pending_else
-                    self.intermediate_code.append(f"{else_label}:")
-                    self.intermediate_code.append(f"{end_label}:")
-                    self.pending_else = None  
-                return
+            # if last_block == 'if':
+            #     # We close if block without else
+            #     if self.pending_else:
+            #         else_label, end_label = self.pending_else
+            #         self.intermediate_code.append(f"{else_label}:")
+            #         self.intermediate_code.append(f"{end_label}:")
+            #         self.pending_else = None  
+            #     return
 
         if not self.in_function or not self.block_stack:
             raise SyntaxError(f"Syntax error at line {line_number}: Not inside function block")

@@ -5,8 +5,6 @@ x = t1
 if not ['t2', 't2 = x == 0'] goto L1
 print("Not a Armstrong")
 return 0
-L1:
-L2:
 print("Armstrong")
 return 0
 func armstrong:
@@ -24,10 +22,6 @@ t7 = t6 * rem
 sum = t7
 t8 = num / 10
 num = t8
-goto L3
-L5:
 if not ['t9', 't9 = sum == n'] goto L6
 return 1
-L6:
-L7:
 return 1
