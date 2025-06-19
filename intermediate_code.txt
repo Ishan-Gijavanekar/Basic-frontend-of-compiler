@@ -1,0 +1,33 @@
+func main:
+num = 153
+t1 = armstrong ( num )
+x = t1
+if not ['t2', 't2 = x == 0'] goto L1
+print("Not a Armstrong")
+return 0
+L1:
+L2:
+print("Armstrong")
+return 0
+func armstrong:
+n = num
+sum = 0
+L3:
+if ['t3', 't3 = num != 0'] goto L4
+goto L5
+L4:
+t4 = num % 10
+rem = t4
+t5 = sum + rem
+t6 = t5 * rem
+t7 = t6 * rem
+sum = t7
+t8 = num / 10
+num = t8
+goto L3
+L5:
+if not ['t9', 't9 = sum == n'] goto L6
+return 1
+L6:
+L7:
+return 1
